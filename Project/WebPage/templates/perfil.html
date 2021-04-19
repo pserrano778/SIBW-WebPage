@@ -1,0 +1,19 @@
+{% extends "panelControl.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/perfil.css">
+  {% endblock %}
+
+
+  {% block central %}
+  <div class ="perfil">
+    <p class="tituloPerfil">Perfil</p>
+    <ul class="listaPerfil">
+      <li><h4>Nombre de usuario: </h4><p class="campoLista">{{ usuario['nombreUsuario'] }}</p></li>
+      <li><h4>Correo electrónico: </h4><p class="campoLista">{{ usuario['email'] }}</p></li>
+      <li><h4>Descripción: </h4><p class="campoLista">{{ descripcion|nl2br }}</p></li>
+      <button class="enlaceSesion2"><a class="perfilEnlace" href="modificarDatosPagina.php">ModificarDatos</a></button>
+    </ul>
+  </div>
+  {% endblock %}
+

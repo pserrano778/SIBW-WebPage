@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Armit</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% block estilo %}
+<p>Estilo </p>
+{% endblock %}
+
+</head>
+<body>
+  <header>
+    <div>
+      <a href="index.php"><img src="imagenes/logo.png" class="logo"/></a>
+      <a href="index.php" class ="enlaceTitulo"><h1 class="title">Armit</h1></a>
+      <div class="sesion">
+        {% if not usuario %}
+        <div class="sesionText">
+          <form action="loginPagina.php" onsubmit=true; method="post">
+            {% block paginaActualLogin %}
+            <input type="hidden" name="destino" value="index.php">
+            {% endblock %}
+            <input class ="enlaceSesion" type="submit" value="Iniciar sesión">
+          </form>
+        </div>
+        <div class="sesionText">
+          <form action="registroPagina.php" onsubmit=true; method="post">
+            {% block paginaActualRegistro %}
+            <input type="hidden" name="destino" value="index.php">
+            {% endblock %}
+            <input class ="enlaceSesion" type="submit" value="Registrarse">
+          </form>
+        </div>
+        {% else %}
+        <div class="sesionText">
+          <button class="enlaceSesion"><a class="perfilEnlace" href="panelControl.php">Panel de control</a></button>
+        </div>
+        <div class="sesionText">
+          <button class="enlaceSesion"><a class="perfilEnlace" href="logout.php">Desconectar</a></button>
+        </div>
+        {% endif %}
+      </div> 
+      <nav>
+        <ul class="menu">
+          <li><a class="textMenu" href="#">Juegos</a></li>
+          <li><a class="textMenu" href="#">Foro</a></li>
+          <li><a class="textMenu" href="#">Asistencia</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<div class ="cuerpo">
+  {% block zonaAuxiliar %}
+  <div class ="auxZone">
+    <h2 class="textoIntro">Enlaces relacionados:</h2>
+    <nav>
+      <ul>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://casinos-seguros.com/torneos/">Torneos Online</a></li>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://bingoonline.bingo/casinos-online-espanoles/">Casinos Online</a></li>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://bingoonline.bingo/mejor-bingo-online-con-dinero-real/">Bingo Online</a></li>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://www.tiendadelpoker.com/">Tienda Poker&Casino</a></li>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://www.juegoseguro.es/">Juego Seguro</a></li>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://www.ias.gob.ar/juegoresponsable/recomendaciones.php">Juego Responsable</a></li>
+        <li class ="textoLink"><a class="auxZoneLink" href="https://www.trecebits.com/2019/04/17/apuesta-con-cabeza-y-sobre-todo-con-seguridad/">Seguridad en apuestas online</a></li>
+      </ul>
+    </nav>
+  </div>
+  {% endblock %}
+  {% block central %}
+  <p>Parte central de la plantilla</p>
+  {% endblock %}
+</div>
+
+<footer>
+  <div>Pedro Serrano Pérez</div>
+  <div>© 2020 - PSerrano</div>
+  <div><address ><a class="correoE" href="mailto:pserrano778@correo.ugr.es">pserrano778@correo.ugr.es</a></address></div>
+</footer>
+
+
+</body>
+</html>

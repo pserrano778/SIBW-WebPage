@@ -1,0 +1,33 @@
+{% extends "panelControl.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/listaComentarios.css">
+  {% endblock %}
+
+
+  {% block central %}
+  <div class ="displayComentarios">
+        {% for comentario in comentarios %}
+        <div id="comentario1" class ="estiloComentario"><p class ="autorComentario">{{ comentario['autor'] }}</p>
+          {% if (usuario['tipo'] == "moderador") or (usuario['tipo'] == "super") %}
+            <div class="iconosMod">
+              <form action="modificarComentarioPagina.php" method="post">
+                <input type="hidden" name="idComentario" value="{{ comentario['idComentario'] }}">
+                <input type="hidden" name="listaComentarios" value="1">
+                <input type="image" src="imagenes/edit.png" class ="iconoModerador" alt="submit"/>
+              </form>
+              <form action="borrarComentario.php" method="post">
+                <input type="hidden" name="idComentario" value="{{ comentario['idComentario'] }}">
+                <input type="hidden" name="listaComentarios" value="1">
+                <input type="image" src="imagenes/eliminar.png" class ="iconoModerador" alt="submit"/>
+              </form>
+            </div>
+          {% endif %}
+          <p class ="textoComentario">{{ comentario['texto']|nl2br }}</p>
+          {% if comentario['modificado'] %}
+            <p class="comentarioEditado">Comentario editado por un moderador</p>
+          {% endif %}
+          <p class ="fechaHoraComentario">{{ comentario['fecha'] }}</p></div>
+        {% endfor %}
+  </div>
+  {% endblock %}

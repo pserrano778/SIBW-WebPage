@@ -1,0 +1,31 @@
+{% extends "padre.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/panelControl.css">
+  {% endblock %}
+
+  {% block zonaAuxiliar %}
+  <div class ="auxZone">
+    <h2 class="textoIntro">Panel de control</h2>
+    <nav>
+      <ul>
+        {% if usuario %}
+        <li class ="textoLink"><a class="auxZoneLink" href="perfil.php">Perfil</a></li>
+        {% if (usuario['tipo'] == "moderador") or (usuario['tipo'] == "super") %}
+        <li class ="textoLink"><a class="auxZoneLink" href="listaComentarios.php">Lista de comentarios</a></li>
+        {% endif %}
+        {% if (usuario['tipo'] == "gestor") or (usuario['tipo'] == "super") %}
+        <li class ="textoLink"><a class="auxZoneLink" href="listaEventos.php">Gestión de eventos</a></li>
+        {% endif %}
+        {% if usuario['tipo'] == "super" %}
+        <li class ="textoLink"><a class="auxZoneLink" href="listaUsuarios.php">Gestión de usuarios</a></li>
+        {% endif %}
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+  {% endblock %}
+  {% block central %}
+
+  {% endblock %}
+

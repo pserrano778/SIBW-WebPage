@@ -1,0 +1,108 @@
+{% extends "padre.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/evento.css">
+  {% endblock %}
+
+  {% block paginaActualLogin %}
+    <input type="hidden" name="destino" value="evento.php?ev={{ idEvento }}">
+  {% endblock %}
+
+  {% block paginaActualRegistro %}
+    <input type="hidden" name="destino" value="evento.php?ev={{ idEvento }}">
+  {% endblock %}
+
+  {% block central %}
+  <div class ="comentarios">
+    <button onclick="mostrarCometarios()" class ="botonComentarios">Comentarios</button>
+    <div id="globalCajaComentarios" class ="scrollComentarios">
+      <div class ="cajaComentarios">
+        <div class ="cuadroComentarios">
+          <div id="comentarios">
+            {% for comentario in comentarios %}
+            <div id="comentario1" class ="estiloComentario"><p class ="autorComentario">{{ comentario['autor'] }}</p>
+              {% if (usuario['tipo'] == "moderador") or (usuario['tipo'] == "super") %}
+                <div class="iconosMod">
+                  <form action="modificarComentarioPagina.php" method="post">
+                    <input type="hidden" name="idComentario" value="{{ comentario['idComentario'] }}">
+                    <input type="image" src="imagenes/edit.png" class ="iconoModerador" alt="submit"/>
+                  </form>
+                  <form action="borrarComentario.php" method="post">
+                    <input type="hidden" name="idComentario" value="{{ comentario['idComentario'] }}">
+                    <input type="image" src="imagenes/eliminar.png" class ="iconoModerador" alt="submit"/>
+                  </form>
+                </div>
+              {% endif %}
+              <p class ="textoComentario">{{ comentario['texto']|nl2br }}</p>
+              {% if comentario['modificado'] %}
+                <p class="comentarioEditado">Comentario editado por un moderador</p>
+              {% endif %}
+              <p class ="fechaHoraComentario">{{ comentario['fecha'] }}</p></div>
+            {% endfor %}
+          </div>
+          {% if usuario %}
+          <div class ="nuevoComentario"><h4 class ="tituloNuevoComentario">Deja un comentario:</h4>
+            <form class ="formularioComentario" action="insertarComentario.php" onsubmit="return comprobarCampos();" method="post">
+              <input class ="cajaFormulario" type="hidden" id="nombre" name="nombre" value="{{ usuario['nombreUsuario'] }}">
+              <input class ="cajaFormulario" type="hidden" id="email" name="email" value="{{ usuario['email'] }}">
+              <label for="comentario">Comentario:</label><br>
+              <textarea class ="textAreaComentario" id="comentario" name="comentario" placeholder="Escribe aquí tu comentario" oninput="censurarComentario()" value="" maxlength="500"></textarea><br><br>
+              <input type="hidden" name="idEvento" value="{{ idEvento }}">
+              <input type="hidden" name="destino" value="evento.php?ev={{ idEvento }}">
+              <input class ="botonEnviar" type="submit" value="Enviar">
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    {% if (usuario['tipo'] == "gestor") or (usuario['tipo'] == "super") %}
+  <div class="iconosMod">
+    <form action="modificarEventoPagina.php" method="post">
+      <input type="hidden" name="idEvento" value="{{ idEvento }}">
+      <input type="image" src="imagenes/edit.png" class ="iconoModerador" alt="submit"/>
+    </form>
+    <form action="borrarEvento.php" method="post">
+      <input type="hidden" name="idEvento" value="{{ idEvento }}">
+      <input type="image" src="imagenes/eliminar.png" class ="iconoModerador" alt="submit"/>
+    </form>
+  </div>
+  {% endif %}
+    <article>
+      <div class="cuerpoEvento">
+        <div class ="imagenesEvento">
+          {% for imagen in evento['imagenes'] %}
+          <div><img class ="imgEvento" src="{{ imagen['ruta'] }}"/><p class="textoImagen">{{ imagen['texto'] }}</p><p class="textoImagen"></p></div>
+          {% endfor %}
+        </div>
+        
+        <div class ="textoEvento">
+          <h2>{{ evento['nombre'] }}</h2><br>
+          <h3>~¿Quién organiza el evento?</h3> <h3>{{ evento['organizador'] }}</h3><br>
+          <h4>~¿Cuándo se celebra?</h4> <h4>{{ evento['fecha'] }}</h4><br>
+          <h4>~¿Dónde se celebra?</h4> <h4>{{ evento['lugar'] }}</h4><br>
+          <p>{{ evento['descripcion'] }}</p>
+
+          <div class ="enlacesExternos">
+            <nav>
+              <ul class ="estiloEnlacesExt">
+                {% for enlace in evento['enlacesAdicionales'] %}
+                <li><a class ="enlaceExterno" href="{{ enlace['enlace'] }}">{{ enlace['texto'] }}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class ="botonesSociales">
+        <div><a href="https://www.facebook.com/eurorounders/"><img src="imagenes/FB.png" class ="botonSocial"/></a></div>
+        <div><a href="https://twitter.com/hashtag/Europokermillion_2020?src=hashtag_click"><img src="imagenes/TW.png" class ="botonSocial"/></a></div>
+        <div><a href="evento_imprimir.php?ev={{ idEvento }}"><img src="imagenes/IMP.png" class ="botonSocial"/></a></div>
+      </div>
+    </article>
+  </div>
+  <script src="./javascript/cajaComentarios.js"></script>
+  <script>inicializarPalabrasProhibidas();</script>
+  {% endblock %}

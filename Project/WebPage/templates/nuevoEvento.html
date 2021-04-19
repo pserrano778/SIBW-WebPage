@@ -1,0 +1,38 @@
+{% extends "listaEventos.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/nuevoEvento.css">
+  {% endblock %}
+
+
+  {% block central %}
+  <div class ="nuevoEvento">
+    <p class="tituloNuevoEvento">Nuevo Evento</p>
+    {% if erroresImagenes %}
+      {% for errores in erroresImagenes %}
+        {% for error in errores %}
+        <p class="error">{{ error }}</p>
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+    <form class ="estiloFormulario" action="insertarEvento.php" onsubmit="return comprobarCampos();" method="post" enctype="multipart/form-data">
+      <label for="Nombre">Nombre del evento:</label><br>
+      <input class ="cajaFormulario" type="text" id="nombre" name="nombre" value="" maxlength="100"><br><br>
+      <label for="Lugar">Lugar donde se celebra el evento:</label><br>
+      <input class ="cajaFormulario" type="text" id="lugar" name="lugar" value="" maxlength="100"><br><br>
+      <label for="Organizador">Organizador del evento:</label><br>
+      <input class ="cajaFormulario" type="text" id="organizador" name="organizador" value="" maxlength="100"><br><br>
+      <label for="Fecha">Fecha del evento:</label><br>
+      <input class ="cajaFormulario" type="date" id="fecha" name="fecha" value=""><br><br>
+      <label for="tPortada">Texto en portada:</label><br>
+      <input class ="cajaFormulario" type="text" id="textoPortada" name="textoPortada" value="" maxlength="100"><br><br>
+      <label for="IPortada">Imagen en portada:</label><br>
+      <input type="file" name="imagenPortada"/><br><br>
+      <label for="comentario">Descripción:</label><br>
+      <textarea class ="textAreaDescripcion" id="descripcion" name="descripcion" value=""></textarea><br><br>
+      <input class ="botonEnviar" type="submit" value="Enviar">
+    </form>
+  </div>
+  <script src="./javascript/nuevoEvento.js"></script>
+  {% endblock %}
+

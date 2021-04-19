@@ -1,0 +1,24 @@
+{% extends "panelControl.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/modificarComentario.css">
+  {% endblock %}
+
+
+  {% block central %}
+  <div class ="modificarComentario">
+    <p class="tituloModificarComentario">Modificar Comentario {{ comentario['idComentario'] }} </p>
+    <p class="autorComentario">Autor: {{ comentario['autorComentario'] }}</p>
+    <form class ="formularioComentario" action="modificarComentario.php" onsubmit="return comprobarTextoComentario();" method="post">
+      <label for="comentario">Comentario:</label><br>
+      <textarea class ="textAreaComentario" id="comentario" name="comentario" value="" maxlength="500" rows="5" cols="29">{{ comentario['textoComentario'] }}</textarea><br><br>
+      {% if comentario['listaComentarios'] %}
+      <input type="hidden" name="listaComentarios" value="1">
+      {% endif %}
+      <input type="hidden" name="idComentario" value="{{ comentario['idComentario'] }}">
+      <input class ="botonEnviar" type="submit" value="Modificar">
+    </form>
+    <script src="./javascript/cajaComentarios.js"></script>
+  </div>
+  {% endblock %}
+

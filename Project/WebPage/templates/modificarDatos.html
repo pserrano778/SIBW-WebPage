@@ -1,0 +1,33 @@
+{% extends "perfil.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/modificarDatos.css">
+  {% endblock %}
+
+
+  {% block central %}
+  <div class ="datos">
+    <p class="tituloDatos">Modificar Datos</p>
+    {% if cadena %}
+      <p class="mensaje">{{ cadena }}</p>
+    {% endif %}
+    <form class="estiloFormulario" action="modificarDatos.php" onsubmit="return comprobarEmail();" method="post">
+      <label for="email">Nuevo E-mail:</label><br>
+      <input  type="email" id="email" name="email" placeholder="Introduzca un nuevo email"  maxlength="20" size="30">
+      <input class ="botonEnviar" type="submit" value="Enviar">
+    </form>
+    <form class="estiloFormulario" action="modificarDatos.php" onsubmit="return comprobarPass();" method="post">
+      <label for="email">Nueva contraseña:</label><br>
+      <input  type="password" id="password" name="password" placeholder="Introduzca una nueva contraseña"  maxlength="20" size="30">
+      <input class ="botonEnviar" type="submit" value="Enviar">
+    </form>
+    <form class="estiloFormulario" action="modificarDatos.php" onsubmit="return comprobarDescripcion();" method="post">
+      <label for="descripcion">Nueva descripción:</label><br>
+      <textarea id="descripcion" name="descripcion" placeholder="Introduzca una nueva descripción"  maxlength="500" rows="5" cols="29"></textarea>
+      <input class ="botonEnviar" type="submit" value="Enviar"<>
+    </form>
+  </div>
+
+  <script src="./javascript/modificarDatos.js"></script>
+  {% endblock %}
+

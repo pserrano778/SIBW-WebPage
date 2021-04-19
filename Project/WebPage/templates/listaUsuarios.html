@@ -1,0 +1,40 @@
+{% extends "panelControl.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/listaUsuarios.css">
+  {% endblock %}
+
+  {% block central %}
+  <div class ="estiloMarco">
+    {% if error %}
+    <p class="estilo error">{{ error }}</p>
+    {% endif %}
+    <div class="formulariosUser">
+    {% for user in usuarios %}
+    <form class="estiloFormularios" action="cambiarPermisos.php" onsubmit="return true;" method="post">
+      <input type="hidden" name="nombreUsuario" value="{{ user['nombreUsuario'] }}">
+      <br><br><label for="Nombre">Nombre de usuario: <strong>{{ user['nombreUsuario'] }}</strong></label><br>
+      <br><br><label for="Nombre">E-mail: <strong>{{ user['email'] }}</strong></label><br>
+      <br><br><label for="Nombre">Permisos actuales: <strong>{{ user['tipo'] }}</strong></label><br><br>
+      <select name="nuevoTipo">
+        {% if user['tipo'] != "normal" %}
+        <option>normal</option>
+        {% endif %}
+        {% if user['tipo'] != "moderador" %}
+        <option>moderador</option>
+        {% endif %}
+        {% if user['tipo'] != "gestor" %}
+        <option>gestor</option>
+        {% endif %}
+        {% if user['tipo'] != "super" %}
+        <option>super</option>
+        {% endif %}
+      </select>
+      <input class ="botonEnviar" type="submit" value="Cambiar permisos">
+    </form>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+  {% endblock %}
+

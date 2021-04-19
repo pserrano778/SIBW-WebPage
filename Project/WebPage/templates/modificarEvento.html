@@ -1,0 +1,81 @@
+{% extends "listaEventos.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/modificarEvento.css">
+  {% endblock %}
+
+
+  {% block central %}
+  <div class ="nuevoEvento">
+    <p class="tituloNuevoEvento">Modificar datos evento {{ evento['idEvento'] }}</p>
+    {% if mensaje %}
+    <p class="mensaje">{{ mensaje }}</p>
+    {% endif %}
+    {% if erroresImagenes %}
+      {% for error in erroresImagenes %}
+      <p class="mensaje">{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+    <p class="seccEvento">Información evento</p>
+    <div class="formularios">
+      <form class ="estiloFormulario" action="modificarEvento.php" onsubmit="return comprobarCampos();" method="post" enctype="multipart/form-data">
+        <label for="Nombre">Nombre del evento:</label><br>
+        <input class ="cajaFormulario" type="text" id="nombre" name="nombre" value="{{ evento['nombre'] }}" maxlength="100"><br><br>
+        <label for="Lugar">Lugar donde se celebra el evento:</label><br>
+        <input class ="cajaFormulario" type="text" id="lugar" name="lugar" value="{{ evento['lugar'] }}" maxlength="100"><br><br>
+        <label for="Organizador">Organizador del evento:</label><br>
+        <input class ="cajaFormulario" type="text" id="organizador" name="organizador" value="{{ evento['organizador'] }}" maxlength="100"><br><br>
+        <label for="Fecha">Fecha del evento:</label><br>
+        <input class ="cajaFormulario" type="date" id="fecha" name="fecha" value="{{ evento['fechaOriginal'] }}"><br><br>
+        <label for="tPortada">Texto en portada:</label><br>
+        <input class ="cajaFormulario" type="text" id="textoPortada" name="textoPortada" value="{{ evento['textoPortada'] }}" maxlength="100"><br><br>
+        <label for="IPortada">Imagen en portada:</label><br>
+        <input type="file" name="imagenPortada"/><br><br>
+        <label for="comentario">Descripción:</label><br>
+        <textarea class ="textAreaDescripcion" id="descripcion" name="descripcion" value="">{{ evento['descripcion'] }}</textarea><br><br>
+        <input type="hidden" name="idEvento" value="{{ evento['idEvento'] }}">
+        <input class ="botonEnviar" type="submit" value="Modificar">
+      </form>
+      <div class ="estiloFormulario">
+        <form action="nuevaImagenEvento.php" onsubmit="return comprobarTextoImagen();" method="post" enctype="multipart/form-data">
+          <label for="Nombre">Texto de la imagen:</label><br>
+          <input class ="cajaFormulario" type="text" id="textoImagen" name="textoImagen" value="" maxlength="100"><br><br>
+          <label for="IEvento">Imagen del evento:</label><br>
+          <input type="file" name="imagenEvento"/><br><br>
+          <input type="hidden" name="idEvento" value="{{ evento['idEvento'] }}">
+          <input class ="botonEnviar" type="submit" value="Añadir imagen">
+        </form>
+        <form action="borrarImagenEvento.php" onsubmit="return true;" method="post">
+          <input type="hidden" name="idEvento" value="{{ evento['idEvento'] }}">
+          <br><br><label for="Borrar">Borrar imagen del evento:</label><br>
+          <select name="idBorrarImagen">
+            {% for imagen in evento['imagenes'] %}
+            <option>{{ imagen['idImagen'] }}</option>
+            {% endfor %}
+          </select>
+          <input class ="botonEnviar" type="submit" value="Borrar imagen">
+        </form>
+      </div>
+      <div class ="estiloFormulario">
+        <form action="nuevaEtiquetaEvento.php" onsubmit="return comprobarTextoEtiqueta();" method="post">
+          <label for="Etiqueta">Etiqueta:</label><br>
+          <input class ="cajaFormulario" type="text" id="etiqueta" name="etiqueta" value="" maxlength="20"><br><br>
+          <input type="hidden" name="idEvento" value="{{ evento['idEvento'] }}">
+          <input class ="botonEnviar" type="submit" value="Añadir etiqueta">
+        </form>
+        <form action="borrarEtiquetaEvento.php" onsubmit="return true;" method="post">
+          <input type="hidden" name="idEvento" value="{{ evento['idEvento'] }}">
+          <br><br><label for="Borrar">Borrar etiqueta del evento:</label><br>
+          <select name="etiquetaEvento">
+            {% for etiqueta in evento['etiquetas'] %}
+            <option>{{ etiqueta['etiqueta'] }}</option>
+            {% endfor %}
+          </select>
+          <input class ="botonEnviar" type="submit" value="Borrar etiqueta">
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="./javascript/nuevoEvento.js"></script>
+  {% endblock %}
+

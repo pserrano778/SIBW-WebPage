@@ -1,0 +1,40 @@
+{% extends "panelControl.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/listaEventos.css">
+  {% endblock %}
+
+  {% block central %}
+<div class="estiloMarco">
+  <div>
+    <form class="estiloBuscador" action="busquedaPalabra.php" onsubmit="true;" method="get">
+      <label for="nombreUsuario">Busca una palabra en las descripciones de los eventos:&nbsp;</label>
+      <input type="text" id="palabra" name="palabra" placeholder="Escribe aquí una palabra para buscar" maxlength="15" size="30">
+      <input type="submit" value="Buscar">
+    </form>
+    <button class="nuevoEvento"><a class="enlaceEvento" href="nuevoEvento.php">Nuevo Evento</a></button>
+    <div class ="eventos">
+      {% for imagen in todosEventos %}
+      <div class ="evento">
+        <form class="estiloPublicacion" action="cambiarPublicacionEvento.php" onsubmit="true;" method="POST">
+          {% if imagen['publicado'] %}
+          <input class="botonEnviar" type="submit" value="No Publicar">
+          <input type="hidden" name="nuevoEstado" value="0">
+          {% else %}
+          <input class="botonEnviar" type="submit" value="Publicar">
+          <input type="hidden" name="nuevoEstado" value="1">
+          {% endif %}
+          <input type="hidden" name="idEvento" value="{{ imagen['idEvento'] }}">
+        </form>
+        <a href="./evento.php?ev={{ imagen['idEvento'] }}" class ="enlaceEvento"><img src="{{ imagen['ruta'] }}" class="imgEvento"/> <p class ="nombreEvento">{{ imagen['texto'] }}</p></a>
+        <p class ="nombreEvento">Etiquetas:</p>
+        {% for etiqueta in imagen['etiquetas'] %}
+        <p class ="nombreEvento">{{ etiqueta['etiqueta'] }}</p>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+  {% endblock %}
+

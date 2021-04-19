@@ -1,0 +1,28 @@
+{% extends "padre.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/login.css">
+  {% endblock %}
+
+  {% block central %}
+  <div class ="login">
+    <p class="tituloLogin">Inicia Sesión</p>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <form class ="formLogin" action="login.php" onsubmit="return comprobarCampos();" method="post">
+      <label for="nombreUsuario">Nombre de usuario:</label><br>
+      <input type="text" id="nombreUsuario" name="nombreUsuario" placeholder="Escribe aquí tu nombre de usuario" maxlength="15" size="30"><br><br>
+      <label for="password">Contraseña:</label><br>
+      <input type="password" id="password" name="password" placeholder="Escribe aquí tu contraseña" maxlength="20" size="30"><br><br>
+      <input type="hidden" name="destino" value="{{ pagAnterior }}">
+      <input type="submit" onsubmit="login();" value="Iniciar sesión">
+    </form>
+    <p class="textoRegistro">¿No estás registrado?</p>
+    <form class="estiloForm" action="registroPagina.php" onsubmit=true; method="post">
+      <input type="hidden" name="destino" value="{{ pagAnterior }}">
+      <input class ="enlaceSesion" type="submit" value="Registrarse">
+    </form>
+  </div>
+  <script src="./javascript/login.js"></script>
+  {% endblock %}

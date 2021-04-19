@@ -1,0 +1,29 @@
+{% extends "padre.html" %}
+
+  {% block estilo %}
+  <link rel="stylesheet" href="./estilos/portada.css">
+  {% endblock %}
+
+  {% block paginaActualLogin %}
+    <input type="hidden" name="destino" value="index.php">
+  {% endblock %}
+
+  {% block paginaActualRegistro %}
+    <input type="hidden" name="destino" value="index.php">
+  {% endblock %}
+
+  {% block central %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="./javascript/buscador.js"></script>
+  <div>
+    <div class="buscador">
+      <input class="barraBusqueda" type="text" id="texto" name="texto" oninput="enviarTexto()">
+      <div id="livesearch" class="livesearch"></div>
+    </div>
+    <div class ="eventos">
+      {% for imagen in todosEventos %}
+      <div class ="evento"><a href="./evento.php?ev={{ imagen['idEvento'] }}" class ="enlaceEvento"><img src="{{ imagen['ruta'] }}" class="imgEvento"/> <p class ="nombreEvento">{{ imagen['texto'] }}</p></a></div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock %}
